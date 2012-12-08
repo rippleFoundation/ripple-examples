@@ -19,7 +19,10 @@ server.socket = null;
 $(document).ready(function()
 {
 	setUpD3();
-	var str = "ws://" + Options.server.websocket_ip + ":";
+	
+	var str;
+	if(Options.server.websocket_ssl) str= "wss://" + Options.server.websocket_ip + ":";
+	else str= "ws://" + Options.server.websocket_ip + ":";
 	
 	str += Options.server.websocket_port;
 	str += "/";
@@ -47,7 +50,7 @@ gRoot.connected =function()
 {
 	console.log("connected to websocket");
 	
-	var command = '{"command":"ledger", "params" : [ "lastclosed" , "full" ] }';
+	var command = '{"command":"ledger", "ledger": "closed" , "full" : 1 }';
 	server.socket.send(command);
 	
 	command= '{"command":"subscribe", "streams" : [ "transactions" ]}';
@@ -76,7 +79,7 @@ function filloutLedgerData(ledger)
   $('#LedgerInfoParentHash').text(ledger.parentHash);
   $('#LedgerInfoNumber').text(ledger.seqNum);
 
-  var total=ledger.totalCoins /BALANCE_DISPLAY_DIVISOR;
+  var total=ledger.totalCoins /Options.BALANCE_DISPLAY_DIVISOR;
     total=addCommas(total);
   $('#LedgerInfoTotalCoins').text(total);
   $('#LedgerInfoDate').text(ledger.closeTime);
@@ -330,7 +333,7 @@ function update()
 
 	nodeEnter.append("circle")
 		//.attr("r", function(d) { return Math.min(70,5+(Math.log(d.Balance/BALANCE_DISPLAY_DIVISOR)/ Math.LOG10E)); })
-	    .attr("r", function(d) { return Math.min(40,5+Math.sqrt(d.Balance/BALANCE_DISPLAY_DIVISOR)/10); })  // TODO: this doesn't update
+	    .attr("r", function(d) { return Math.min(40,5+Math.sqrt(d.Balance/Options.BALANCE_DISPLAY_DIVISOR)/10); })  // TODO: this doesn't update
 	    .style("fill", gRoot.color(1) )
 	    .style("stroke", "black")
 	    .on("mouseover", function(d) { overNode(d); });
@@ -377,7 +380,7 @@ function overNode(node)
 
 
     // we can look up all the details since we pulled the whole ledger
-    var bal=node.Balance /BALANCE_DISPLAY_DIVISOR;
+    var bal=node.Balance /Options.BALANCE_DISPLAY_DIVISOR;
     bal=addCommas(bal);
 
     $('#NodeData').html(node.Account+"<br>"+bal+" XRP");
