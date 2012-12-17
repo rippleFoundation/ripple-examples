@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ripple History</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="css/bootstrap.css" rel="stylesheet">
+	</head>
+	<body>
+        <div class="container">
+            <div class="page-header">
+                <h1>Ripple transaction history</h1>
+            </div>
+            <table id="history" class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Account</th>
+                        <th>Destination / TakerGets</th>
+                        <th>Amount / TakerPays</th>
+                        <th>InLedger</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a href="" id="prevButton">Prev</a>
+                            <a href="" id="nextButton">Next</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
