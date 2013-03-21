@@ -70,7 +70,7 @@ $(function() {
     // request object getting the history
     var req = {
         method: 'tx_history',
-        params: [index]
+        params: [{'start' : index}]
     }
 
     // Call for getting the history
@@ -112,7 +112,7 @@ $(function() {
     $('#nextButton').click(function(){
         index += 20;
 
-        req.params = [index];
+        req.params = [{'start' : index}];
         rpc.call(req);
 
         return false;
@@ -122,7 +122,7 @@ $(function() {
     $('#prevButton').click(function(){
         index -= 20;
 
-        req.params = [index];
+        req.params = [{'start' : index}];
         rpc.call(req);
 
         return false;
